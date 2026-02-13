@@ -10,9 +10,31 @@
 ✅ **Modern Syntax**: Uses `using` syntax (explicit resource management)
 ✅ **Code Quality**: All formulas and actions implemented  
 ✅ **API Compatibility**: Fixed and verified with live testing
+✅ **Workflow**: Two-stage push→confirm→publish pattern implemented
 ❌ **Coda Upload**: Blocked by esbuild target incompatibility  
 
 ## Recent Updates
+
+### ✅ Two-Stage Automated Workflow
+Refactored to provide cleaner user experience:
+
+**Stage 1: Push Changes**
+- `PushRowToCollection()` or `PushTableToCollection()` actions
+- Focus: Data push only (no publishing)
+- Returns: Clear confirmation (items added, fields set, warnings)
+- No `publish` parameter - gives users control
+
+**Stage 2: Publish Changes**  
+- `PublishProject()` action (separate and dedicated)
+- Runs after push actions to go live
+- Shows change count and deployment details
+- Guides users if no pending changes
+
+**Benefits:**
+- ✅ Confirmation after each stage
+- ✅ User control over when to publish
+- ✅ No accidental deployments
+- ✅ Clear feedback and messages
 
 ### ✅ Fixed API Compatibility Issues (Post-Testing)
 During live Framer API testing, discovered and fixed 3 critical bugs:
@@ -135,13 +157,13 @@ npx tsc --noEmit  # ✅ Passes successfully
 
 ## What's Working
 
-All pack functionality is complete and API-verified:
-- ✅ PushRowToCollection action (single row push)
-- ✅ PushTableToCollection action (bulk push with options)
-- ✅ PublishProject action (publish and deploy)
-- ✅ ManagedCollections sync table
-- ✅ ListManagedCollectionItems formula
+All pack functionality is complete and API-verified with clean two-stage workflow:
+- ✅ PushRowToCollection action - Stage 1 (single row push)
+- ✅ PushTableToCollection action - Stage 1 (bulk push with options)
+- ✅ PublishProject action - Stage 2 (publish & deploy)
+- ✅ ManagedCollections sync table - List all collections
+- ✅ ListManagedCollectionItems formula - Get collection items
 - ✅ Complete field type mapping (15 types)
 - ✅ Cross-collection reference support
-- ✅ Optional publish/deploy after push
 - ✅ Framer API getChangedPaths, publish, deploy verified
+- ✅ Clear user guidance through workflow stages
