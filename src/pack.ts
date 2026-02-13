@@ -270,7 +270,7 @@ pack.addFormula({
 
 pack.addFormula({
   name: "PublishProject",
-  description: "Publish and deploy a Framer project.",
+  description: "Publish and deploy pending changes to a Framer project. Run this after PushRowToCollection or PushTableToCollection.",
   isAction: true,
   parameters: [
     coda.makeParameter({
@@ -296,7 +296,7 @@ pack.addFormula({
         changeCount,
         deploymentId: "",
         hostnames: [],
-        message: "No changes to publish.",
+        message: "No pending changes. Run PushRowToCollection or PushTableToCollection first.",
       };
     }
 
@@ -308,7 +308,7 @@ pack.addFormula({
       changeCount,
       deploymentId: publishResult.deployment.id,
       hostnames: publishResult.hostnames.map((hostname) => hostname.hostname),
-      message: "Publish completed.",
+      message: `✅ Published and deployed ${changeCount} change(s).`,
     };
   },
 });
@@ -352,12 +352,6 @@ pack.addFormula({
     }),
     coda.makeParameter({
       type: coda.ParameterType.Boolean,
-      name: "publish",
-      description: "Publish and deploy after pushing.",
-      optional: true,
-    }),
-    coda.makeParameter({
-      type: coda.ParameterType.Boolean,
       name: "use12HourTime",
       description: "Format time values as 12-hour strings.",
       optional: true,
@@ -373,7 +367,6 @@ pack.addFormula({
       columnsJson,
       rowJson,
       referenceMapJson,
-      publish,
       use12HourTime,
     ],
     context,
@@ -437,12 +430,6 @@ pack.addFormula({
       await target2.addItems(mapping.items);
     }
 
-    const publishResult = await publishIfRequested(
-      projectUrl,
-      apiKey,
-      publish,
-    );
-
     return {
       collectionId: collection.collectionId,
       collectionName: collection.collectionName,
@@ -450,11 +437,11 @@ pack.addFormula({
       itemsSkipped: mapping.skippedCount,
       fieldsSet,
       warnings: mapping.warnings,
-      published: Boolean(publishResult?.published),
-      deploymentId: publishResult?.deploymentId ?? "",
+      published: false,
+      deploymentId: "",
       message: collection.created
-        ? "Collection created and row pushed."
-        : "Row pushed to collection.",
+        ? `✅ Collection created and row pushed to "${collection.collectionName}". Run PublishProject to deploy.`
+        : `✅ Row pushed to "${collection.collectionName}". Run PublishProject to deploy.`,
     };
   },
 });
@@ -504,12 +491,6 @@ pack.addFormula({
     }),
     coda.makeParameter({
       type: coda.ParameterType.Boolean,
-      name: "publish",
-      description: "Publish and deploy after pushing.",
-      optional: true,
-    }),
-    coda.makeParameter({
-      type: coda.ParameterType.Boolean,
       name: "use12HourTime",
       description: "Format time values as 12-hour strings.",
       optional: true,
@@ -526,7 +507,6 @@ pack.addFormula({
       rowsJson,
       referenceMapJson,
       pruneMissing,
-      publish,
       use12HourTime,
     ],
     context,
@@ -602,12 +582,6 @@ pack.addFormula({
       await target2.addItems(mapping.items);
     }
 
-    const publishResult = await publishIfRequested(
-      projectUrl,
-      apiKey,
-      publish,
-    );
-
     return {
       collectionId: collection.collectionId,
       collectionName: collection.collectionName,
@@ -615,11 +589,11 @@ pack.addFormula({
       itemsSkipped: mapping.skippedCount,
       fieldsSet,
       warnings: mapping.warnings,
-      published: Boolean(publishResult?.published),
-      deploymentId: publishResult?.deploymentId ?? "",
+      published: false,
+      deploymentId: "",
       message: collection.created
-        ? "Collection created and rows pushed."
-        : "Rows pushed to collection.",
+        ? `✅ Collection created and ${mapping.items.length} row(s) pushed to "${collection.collectionName}". Run PublishProject to deploy.`
+        : `✅ ${mapping.items.length} row(s) pushed to "${collection.collectionName}". Run PublishProject to deploy.`,
     };
   },
 });
