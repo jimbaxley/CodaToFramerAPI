@@ -115,16 +115,20 @@ async function publishIfRequested(
   if (!publish) return null;
   using framer = await connect(projectUrl, apiKey);
   const changedPaths = await framer.getChangedPaths();
-  const changeCount = Object.values(changedPaths).reduce(
-    (sum, paths) => sum + paths.length,
-    0,
-  );
+  const changeCount =
+    (changedPaths.added?.length ?? 0) +
+    (changedPaths.removed?.length ?? 0) +
+    (changedPaths.modified?.length ?? 0);
   if (changeCount === 0) {
     return { published: false, changeCount };
   }
-  const { deployment } = await framer.publish();
-  await framer.deploy(deployment.id);
-  return { published: true, deploymentId: deployment.id, changeCount };
+  const publishResult = await framer.publish();
+  await framer.deploy(publishResult.deployment.id);
+  return {
+    published: true,
+    deploymentId: publishResult.deployment.id,
+    changeCount,
+  };
 }
 
 const ManagedCollectionSchema = coda.makeObjectSchema({
@@ -281,10 +285,10 @@ pack.addFormula({
     const apiKey = getApiKey(context);
     using framer = await connect(projectUrl, apiKey);
     const changedPaths = await framer.getChangedPaths();
-    const changeCount = Object.values(changedPaths).reduce(
-      (sum, paths) => sum + paths.length,
-      0,
-    );
+    const changeCount =
+      (changedPaths.added?.length ?? 0) +
+      (changedPaths.removed?.length ?? 0) +
+      (changedPaths.modified?.length ?? 0);
 
     if (changeCount === 0) {
       return {
@@ -296,14 +300,14 @@ pack.addFormula({
       };
     }
 
-    const { deployment } = await framer.publish();
-    const deployed = await framer.deploy(deployment.id);
+    const publishResult = await framer.publish();
+    await framer.deploy(publishResult.deployment.id);
 
     return {
       published: true,
       changeCount,
-      deploymentId: deployment.id,
-      hostnames: deployed.map((hostname) => hostname.hostname),
+      deploymentId: publishResult.deployment.id,
+      hostnames: publishResult.hostnames.map((hostname) => hostname.hostname),
       message: "Publish completed.",
     };
   },
