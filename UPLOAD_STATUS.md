@@ -65,6 +65,17 @@ Tested against Team-Up-NC project (fVJMEOE2kn7QTjTpmyE6):
 - ✅ publish() method callable with correct API signature
 - ✅ deploy() method callable with correct parameter signature
 
+### ✅ Full Two-Stage Workflow Verified (End-to-End)
+Complete workflow tested and confirmed working:
+1. **Push Stage**: Added 2 test items to TestCollection
+   - Items added successfully visible in collection
+2. **Publish Stage**: Ran PublishProject
+   - Publishing succeeded (Deployment ID: b7252c1c1)
+   - Deploy succeeded (deployed to teamupnc.org)
+   - **Confirmed**: New items appear as LIVE in Framer deployment history
+
+**Conclusion**: The full two-stage workflow (Push → Publish) works end-to-end. Items successfully push to Framer managed collections and are deployed to live.
+
 ### ✅ Adopted TypeScript 5.2+ `using` Syntax
 Per Framer's documentation, the pack uses the modern `using` syntax instead of manual `disconnect()` calls:
 
