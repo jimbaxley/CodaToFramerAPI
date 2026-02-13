@@ -1,0 +1,569 @@
+/* Your Plugin CSS */
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    height: 100%;
+    min-height: 0;
+    max-height: 100vh;
+    gap: 15px;
+
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+}
+
+/* New styles for consistent layout */
+.step-form-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.content-scrollable-area {
+    flex-grow: 1;
+    overflow-y: auto; /* Only inner content scrolls */
+    padding: 15px;
+    min-height: 0;
+    max-height: 100%;
+}
+
+/* Adjustments for FieldMapping.tsx to use new classes */
+.mapping form {
+    display: flex; /* Add display flex */
+    flex-direction: column; /* Add flex-direction */
+    overflow: hidden; /* Add overflow hidden */
+}
+
+.mapping .fields {
+    flex-grow: 1; /* Allow fields to take available space */
+    overflow-y: auto; /* Allow fields to scroll if needed */
+}
+
+.sticky-divider {
+    position: sticky;
+    top: 0;
+}
+
+.field-input {
+    width: 100%;
+    flex-shrink: 1;
+}
+
+.fields-column {
+    grid-column: span 2 / span 2;
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.logo {
+    color: var(--framer-color-text-tertiary);
+    background-color: var(--framer-color-bg-tertiary);
+    border-radius: 8px;
+}
+
+.setup {
+    align-items: center;
+    overflow-y: hidden; /* Prevent whole container from scrolling */
+    height: 100%;
+    min-height: 0;
+    max-height: 100vh;
+}
+
+.setup select {
+    font-weight: 600;
+}
+
+.intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Revert to 100% height */
+    width: 100%;
+    flex: 1; /* Revert to flex: 1 to allow growing */
+    text-align: center;
+    max-width: 160px;
+    gap: 5px;
+}
+
+.intro h2 {
+    line-height: 1;
+    font-size: 1em;
+    margin-bottom: 10px;
+}
+
+.intro p {
+    color: var(--framer-color-text-tertiary);
+}
+
+.setup label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 30px;
+    width: 100%;
+    justify-content: space-between;
+    color: var(--framer-color-text-secondary);
+}
+
+.setup select {
+    width: 100%;
+}
+
+/* Styles for the new intro screen elements */
+.intro-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px; 
+}
+
+.coda-logo-intro {
+    width: 50px; /* Adjust as needed */
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.welcome-graphic-intro {
+    width: 120px; /* Shrink the image from 180px to 120px */
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.intro-screen h2 {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+.intro-screen p {
+    color: var(--framer-color-text-secondary);
+    font-size: 1em;
+    max-width: 280px; /* Limit width for better readability */
+}
+
+.steps-list {
+    list-style-position: inside;
+    text-align: left;
+    padding-left: 0;
+    margin-bottom: 5px; /* Reduce space below the list */
+    font-size: 1em;
+    color: var(--framer-color-text-secondary);
+}
+
+.steps-list li {
+    margin-bottom: 5px;
+}
+
+.api-key-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    align-items: center; /* Center form elements */
+}
+
+.api-key-form label {
+    font-weight: bold;
+    font-size: 0.9em;
+    color: var(--framer-color-text);
+    width: auto; /* Adjust label width */
+    justify-content: center; /* Center label text if it wraps */
+}
+
+.api-key-form input[type="text"] {
+    width: 100%;
+    max-width: 260px; /* Max width for input field */
+}
+
+.api-key-form button[type="submit"] {
+    background-color: var(--framer-color-tint);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    width: 100%; /* Fill container */
+    transition: filter 0.2s ease; /* Add transition for filter */
+}
+
+.api-key-form button[type="submit"]:hover {
+    filter: brightness(90%); /* Darken the button on hover */
+}
+
+.api-docs-link {
+    font-size: 0.8em;
+    color: var(--framer-color-text-tertiary);
+    text-align: center;
+    max-width: 280px; /* Limit width */
+}
+
+.api-docs-link a {
+    color: var(--framer-color-tint);
+    text-decoration: none;
+}
+
+.api-docs-link a:hover {
+    text-decoration: underline;
+}
+
+/* Connection mode selector with radio buttons */
+.connection-mode-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 20px 0;
+    padding: 16px;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 8px;
+    text-align: left;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.radio-option:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.radio-option input[type="radio"] {
+    cursor: pointer;
+    margin: 0;
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+}
+
+.radio-label {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    user-select: none;
+    flex: 1;
+}
+
+.radio-label strong {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: var(--framer-color-text);
+    line-height: 1.2;
+}
+
+.radio-description {
+    font-size: 0.75em;
+    color: var(--framer-color-text-tertiary);
+    line-height: 1.4;
+}
+
+.direct-id-input {
+    margin-top: 8px;
+}
+
+.field-hint {
+    font-size: 0.75em;
+    color: var(--framer-color-text-tertiary);
+    margin: 0 0 12px 0;
+    line-height: 1.5;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.field-hint code {
+    background: rgba(0, 0, 0, 0.05);
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 0.95em;
+}
+
+.field-hint strong {
+    color: var(--framer-color-text);
+    font-weight: 600;
+}
+
+.field-description {
+    font-size: 0.9em;
+    color: var(--framer-color-text-secondary);
+    margin: 0 0 12px 0;
+    line-height: 1.5;
+}
+
+.two-column-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    width: 100%;
+    align-items: start;
+}
+
+.input-column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.info-column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
+}
+
+.info-column .field-hint {
+    margin: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
+
+footer {
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    justify-content: center;
+}
+
+footer button {
+    flex: 1;
+}
+
+.primary-button {
+    background-color: var(--framer-color-tint);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: filter 0.2s ease;
+}
+
+.primary-button:hover {
+    filter: brightness(90%);
+}
+
+.secondary-button {
+    background-color: #000;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: filter 0.2s ease;
+}
+
+.secondary-button:hover {
+    filter: brightness(80%);
+}
+
+/* End of styles for intro screen */
+
+.mapping {
+    padding-bottom: 0;
+}
+
+.mapping form {
+    display: flex; /* Add display flex */
+    flex-direction: column; /* Add flex-direction */
+    overflow: hidden; /* Add overflow hidden */
+}
+
+.mapping .fields {
+    display: grid;
+    grid-template-columns: 1fr 8px 1fr;
+    gap: 10px;
+    margin-bottom: auto;
+    padding-bottom: 10px;
+    align-items: center;
+    color: var(--framer-color-text-tertiary);
+}
+
+.mapping .source-field {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    white-space: nowrap;
+    font-weight: 500;
+    background-color: var(--framer-color-bg-tertiary);
+    gap: 8px;
+}
+
+.mapping .source-field[aria-disabled="true"] {
+    opacity: 0.5;
+}
+
+.mapping .source-field:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 1px var(--framer-color-tint);
+}
+
+.mapping .source-field input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.mapping .source-field input[type="checkbox"]:focus {
+    box-shadow: none;
+}
+
+[data-framer-theme=light] .mapping .source-field input[type="checkbox"]:not(:checked) {
+    background: #ccc;
+}
+
+[data-framer-theme=dark] .mapping .source-field input[type="checkbox"]:not(:checked) {
+    background: #666;
+}
+
+.mapping footer {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--framer-color-bg);
+    padding: 0 15px 15px; /* Add horizontal padding, keep bottom */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 1; /* Ensure footer is above content */
+}
+
+.mapping footer::before {
+    content: "";
+    position: absolute;
+    top: -45px;
+    left: 0;
+    width: 100%;
+    height: 45px;
+    background: linear-gradient(to bottom, transparent, var(--framer-color-bg));
+    pointer-events: none;
+}
+
+.setup footer {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--framer-color-bg);
+    padding: 0 15px 15px; /* Add horizontal padding, keep bottom */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 1; /* Ensure footer is above content */
+}
+
+/* Add the fade-out effect for .setup footers as well */
+.setup footer::before {
+    content: "";
+    position: absolute;
+    top: -45px; /* Adjust based on desired fade height */
+    left: 0;
+    width: 100%;
+    height: 45px; /* Adjust based on desired fade height */
+    background: linear-gradient(to bottom, transparent, var(--framer-color-bg));
+    pointer-events: none;
+}
+
+.selection-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.selection-list h2 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--framer-color-text);
+    margin: 0;
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+    width: 100%; /* Fill container */
+    height: 36px; /* Slightly taller for better touch target */
+    padding: 0 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: left;
+    background: var(--framer-color-bg-tertiary); /* Dark grey background */
+    color: var(--framer-color-text); /* Text color for dark grey background */
+    border: 1px solid var(--framer-color-border); /* Optional: add a border */
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+}
+
+.list-item:hover {
+    background: var(--framer-color-tint); /* Blue background on hover */
+    color: white; /* White text on hover */
+    border-color: var(--framer-color-tint); /* Match border to background on hover */
+    opacity: 1; /* Ensure full opacity on hover if previously reduced */
+}
+
+.list-item:active {
+    /* background: var(--framer-color-bg-quaternary); */ /* Keep or adjust active state if needed */
+    opacity: 0.8;
+}
+
+.back-button {
+    background-color: var(--framer-color-tint); /* Blue background */
+    color: white; /* White text */
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%; /* Fill container */
+    align-self: center;
+    font-weight: 500;
+    transition: filter 0.2s ease; /* Add transition for filter */
+}
+
+.back-button:hover {
+    filter: brightness(90%); /* Darken the button on hover */
+}
+
+.back-button-dark {
+    background-color: #222; /* Dark background */
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    align-self: center;
+    font-weight: 500;
+    transition: background 0.2s, color 0.2s, filter 0.2s;
+}
+
+.back-button-dark:hover {
+    background-color: var(--framer-color-tint); /* Blue on hover */
+    color: white;
+    filter: none;
+}
+

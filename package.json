@@ -1,0 +1,39 @@
+{
+  "name": "framer-coda-pack",
+  "version": "0.1.0",
+  "description": "Coda Pack scaffold for Framer Server API",
+  "main": "dist/pack.js",
+  "scripts": {
+    "build": "coda build src/pack.ts",
+    "execute": "coda execute src/pack.ts",
+    "release": "coda release src/pack.ts",
+    "validate": "coda validate src/pack.ts",
+    "upload": "coda upload src/pack.ts",
+    "whoami": "coda whoami",
+    "dev": "coda execute src/pack.ts --watch"
+  },
+  "coda": {
+    "runtime": {
+      "esbuildTarget": "es2022"
+    }
+  },
+  "dependencies": {
+    "@codahq/packs-sdk": "^1.12.0",
+    "framer-api": "^0.1.1",
+    "marked": "^12.0.2",
+    "sanitize-html": "^2.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/sanitize-html": "^2.16.0",
+    "esbuild": "^0.27.3",
+    "typescript": "^5.9.3"
+  },
+  "keywords": [
+    "coda",
+    "pack",
+    "framer",
+    "api"
+  ],
+  "license": "MIT"
+}
