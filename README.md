@@ -76,39 +76,58 @@ Add button formulas to trigger push actions directly:
 
 This is the simplest, most recommended approach.
 
+## Two Usage Patterns
+
+### Pattern 1: Inside a Coda Doc (Recommended)
+Two-stage automated workflow:
+
+1. **Stage 1 - Push Changes**: Add a button with `PushRowToCollection()` or `PushTableToCollection()` formula
+   - Pushes data to your Framer managed collection
+   - Returns confirmation (items added, warnings, etc.)
+   - **No publish happens yet** — you can review before deploying
+
+2. **Stage 2 - Publish**: Add another button with `PublishProject()` formula
+   - Reviews pending changes
+   - Publishes to Framer
+   - Deploys the project
+   - Shows confirmation with deployment details
+
+This two-stage approach gives you:
+- ✅ Confirmation after pushing
+- ✅ Control over when to publish
+- ✅ No accidental deployments
+- ✅ Clear feedback at each stage
+
+**No Coda API token needed** — metadata is available within the doc
+
 ## Features
 
 ### Formulas
 
-- **PushRowToCollection**: Push a single row to a Framer collection
+- **PushRowToCollection**: Push a single row to a Framer collection (Stage 1)
   - Use inside doc via button formula
-  - Parameters: `projectUrl`, `collectionName`, `slugFieldId`, `columnsJson`, `rowJson`, optional `referenceMapJson`, optional `timeFormat12Hour`, optional `publish`
+  - Parameters: `projectUrl`, `collectionName`, `slugFieldId`, `columnsJson`, `rowJson`, optional `referenceMapJson`, optional `use12HourTime`
+  - Returns: items added, fields set, any warnings
   
-- **PushTableToCollection**: Push an entire table to a Framer collection
+- **PushTableToCollection**: Push an entire table to a Framer collection (Stage 1)
   - Use inside doc via button formula
-  - Parameters: `projectUrl`, `collectionName`, `slugFieldId`, `columnsJson`, `rowsJson`, optional `referenceMapJson`, optional `timeFormat12Hour`, optional `pruneMissing`, optional `publish`
+  - Parameters: `projectUrl`, `collectionName`, `slugFieldId`, `columnsJson`, `rowsJson`, optional `referenceMapJson`, optional `pruneMissing`, optional `use12HourTime`
   - Supports field filtering and item pruning
+  - Returns: items added/skipped, fields set, any warnings
+
+- **PublishProject**: Publish and deploy pending changes (Stage 2)
+  - Run after push actions to go live
+  - Parameter: `projectUrl`
+  - Returns: deployment ID, deployed hostnames, change count
 
 - **ListManagedCollectionItems**: List item IDs from a Framer collection
-- **PublishProject**: Publish and deploy a Framer project
-
-### Sync Tables
-
 - **ManagedCollections**: Sync table showing all managed collections in a project
 
 ## Usage
 
-### Inside a Coda Doc (Recommended)
+### Two-Stage Workflow Example
 
-Add button formulas to push data directly from your doc:
-
-```
-// Button formula to push a single row
-=PushRowToCollection(
-  "https://framer.com/projects/[projectId]",
-  "Products",. No Coda API token needed!
-
-**Single Row Push:**
+**Button 1: Push Data (Stage 1)**
 ```coda
 =PushRowToCollection(
   "https://framer.com/projects/YOUR_PROJECT_ID",
@@ -119,18 +138,19 @@ Add button formulas to push data directly from your doc:
 )
 ```
 
-**Entire Table Push:**
+Result: ✅ Row pushed to "CollectionName". Run PublishProject to deploy.
+
+**Button 2: Publish Changes (Stage 2)**
 ```coda
-=PushTableToCollection(
-  "https://framer.com/projects/YOUR_PROJECT_ID",
-  "CollectionName",
-  "slug",
-  JSON(thisTable.columns),
-  JSON(thisTable.rows)
+=PublishProject(
+  "https://framer.com/projects/YOUR_PROJECT_ID"
 )
 ```
 
-**With Optional Parameters:**
+Result: ✅ Published and deployed 3 change(s).
+
+### Advanced: Push Entire Table
+
 ```coda
 =PushTableToCollection(
   "https://framer.com/projects/YOUR_PROJECT_ID",
@@ -138,19 +158,36 @@ Add button formulas to push data directly from your doc:
   "slug",
   JSON(thisTable.columns),
   JSON(thisTable.rows),
-  null,           // referenceMapJson (for lookups to other collections)
-  true,           // use12HourTime
-  true,           // pruneMissing (delete Framer items not in Coda)
-  true            // publish (deploy after push)
+  null,           // referenceMapJson (optional, for lookups)
+  true            // use12HourTime (optional)
 )
 ```
 
-Benefits:
-- ✅ No API token required
-- ✅ Real-time access to table metadata
-- ✅ Simplest integratione columns)
-- Formatted text (markdown → sanitized HTML)
-- Collection references (for lookups to other collections)
+With item pruning (remove items from Framer not in Coda):
+```coda
+=PushTableToCollection(
+  "https://framer.com/projects/YOUR_PROJECT_ID",
+  "CollectionName",
+  "slug",
+  JSON(thisTable.columns),
+  JSON(thisTable.rows),
+  null,           // referenceMapJson
+  true,           // use12HourTime  
+  true            // pruneMissing (delete old items)
+)
+```
+
+## Field Mapping
+
+Automatically transforms Coda fields to Framer:
+- Text, Number, Checkbox, Date fields
+- Select fields (enums)
+- Lookup fields (cross-collection references)
+- Canvas/Rich text (markdown → sanitized HTML)
+- Image, File, Link fields
+- Time formatting (12h/24h preferences)
+- Currency values
+````
 
 ### Cross-Collection References
 
